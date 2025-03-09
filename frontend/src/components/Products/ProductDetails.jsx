@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
+import ProductGrid from "./ProductGrid";
 
 const selectedProduct = {
   name: "Stylish Jacket",
@@ -24,8 +26,85 @@ const selectedProduct = {
     },
   ],
 };
+const similarProducts = [
+  {
+    _id: "1",
+    name: "Product 1",
+    price: 120,
+    images: [
+      {
+        url: "https://picsum.photos/500/500?random=1",
+        altText: "Product 1",
+      },
+    ],
+  },
+  {
+    _id: "2",
+    name: "Product 2",
+    price: 120,
+    images: [
+      {
+        url: "https://picsum.photos/500/500?random=2",
+        altText: "Product 1",
+      },
+    ],
+  },
+  {
+    _id: "3",
+    name: "Product 3",
+    price: 120,
+    images: [
+      {
+        url: "https://picsum.photos/500/500?random=3",
+        altText: "Product 1",
+      },
+    ],
+  },
+  {
+    _id: "4",
+    name: "Product 4",
+    price: 120,
+    images: [
+      {
+        url: "https://picsum.photos/500/500?random=4",
+        altText: "Product 1",
+      },
+    ],
+  },
+];
 
 const ProductDetails = () => {
+  const [mainImage, setMainImage] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const handleQuantityChange = (action) => {
+    if (action === "plus") setQuantity((prev) => prev + 1);
+    if (action === "minus" && quantity > 1) setQuantity((prev) => prev - 1);
+  };
+  const handleAddToCart = () => {
+    if (!selectedColor || !selectedSize) {
+      toast.error("Please select color and size", {
+        duration: 1000,
+        style: { color: "red", fontSize: 18 },
+      });
+      return;
+    }
+    setIsButtonDisabled(true);
+    setTimeout(() => {
+      toast.success("Product added to cart!", {
+        duration: 1000,
+        style: { color: "green", fontSize: 18 },
+      });
+      setIsButtonDisabled(false);
+    }, 500);
+  };
+  useEffect(() => {
+    if (selectedProduct?.images?.length > 0) {
+      setMainImage(selectedProduct.images[0].url);
+    }
+  }, [selectedProduct]);
   return (
     <div className="p-6">
       <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg">
@@ -37,7 +116,10 @@ const ProductDetails = () => {
                 key={index}
                 src={img.url}
                 alt={img.altText || `Thumbnail ${index}`}
-                className="w-20 h-20 object-cover rounded-lg cursor-pointer border"
+                className={`w-20 h-20 object-cover rounded-lg cursor-pointer border ${
+                  mainImage === img.url ? "border-black" : "border-gray-300"
+                }`}
+                onClick={() => setMainImage(img.url)}
               ></img>
             ))}
           </div>
@@ -45,7 +127,7 @@ const ProductDetails = () => {
           <div className="md:w-1/2">
             <div className="mb-4">
               <img
-                src={selectedProduct.images[0]?.url}
+                src={mainImage}
                 alt={selectedProduct.images[0]?.altText}
                 className="w-full h-auto object-cover rounded-lg"
               />
@@ -58,7 +140,10 @@ const ProductDetails = () => {
                 key={index}
                 src={img.url}
                 alt={img.altText || `Thumbnail ${index}`}
-                className="w-20 h-20 object-cover rounded-lg cursor-pointer border"
+                className={`w-20 h-20 object-cover rounded-lg cursor-pointer border ${
+                  mainImage === img.url ? "border-black" : "border-gray-300"
+                }`}
+                onClick={() => setMainImage(img.url)}
               ></img>
             ))}
           </div>
@@ -81,8 +166,13 @@ const ProductDetails = () => {
               <div className="flex gap-2 mt-2">
                 {selectedProduct.colors.map((color) => (
                   <button
+                    onClick={() => setSelectedColor(color)}
                     key={color}
-                    className="w-8 h-8 rounded-full border"
+                    className={`w-8 h-8 rounded-full border ${
+                      selectedColor === color
+                        ? "border-4 border-black"
+                        : "border-gray-300"
+                    }`}
                     style={{
                       backgroundColor: color.toLocaleLowerCase(),
                       //   filter: "brightness(0.5)",
@@ -96,7 +186,13 @@ const ProductDetails = () => {
               <p className="text-gray-700">Size: </p>
               <div className="flex gap-2 mt-2">
                 {selectedProduct.sizes.map((size) => (
-                  <button key={size} className="px-4 py-2 rounded border">
+                  <button
+                    onClick={() => setSelectedSize(size)}
+                    key={size}
+                    className={`px-4 py-2 rounded border ${
+                      selectedSize === size ? "bg-black text-white" : ""
+                    }`}
+                  >
                     {size}
                   </button>
                 ))}
@@ -106,18 +202,32 @@ const ProductDetails = () => {
             <div className="mb-6">
               <p className="text-gray-700">Quantity: </p>
               <div className="flex items-center space-x-4 mt-2">
-                <button className="px-2 py-1 bg-gray-200 rounded test-lg">
+                <button
+                  onClick={() => handleQuantityChange("minus")}
+                  className="px-2 py-1 bg-gray-200 rounded test-lg"
+                >
                   -
                 </button>
-                <span className="text-lg">1</span>
-                <button className="px-2 py-1 bg-gray-200 rounded test-lg">
+                <span className="text-lg">{quantity}</span>
+                <button
+                  onClick={() => handleQuantityChange("plus")}
+                  className="px-2 py-1 bg-gray-200 rounded test-lg"
+                >
                   +
                 </button>
               </div>
             </div>
             {/* Button Add to cart */}
-            <button className="bg-black text-white py-2 px-6 rounded w-full mb-4 uppercase">
-              Add to Cart
+            <button
+              disabled={isButtonDisabled}
+              onClick={() => handleAddToCart()}
+              className={`bg-black text-white py-2 px-6 rounded w-full mb-4 uppercase ${
+                isButtonDisabled
+                  ? "cursor-not-allowed opacity-50"
+                  : "bg-gray-900"
+              }`}
+            >
+              {isButtonDisabled ? "Adding..." : "Add to Cart"}
             </button>
             <div className="mt-10 text-gray-700">
               <h3 className="text-xl font-bold mb-4">Characteristics:</h3>
@@ -135,6 +245,13 @@ const ProductDetails = () => {
               </table>
             </div>
           </div>
+        </div>
+        {/* You May Like */}
+        <div className="mt-20">
+          <h2 className="text-2xl text-center font-medium mb-4">
+            You May Also Like
+          </h2>
+          <ProductGrid products={similarProducts} />
         </div>
       </div>
     </div>
