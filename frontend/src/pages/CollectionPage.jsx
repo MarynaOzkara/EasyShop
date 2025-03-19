@@ -20,7 +20,9 @@ const CollectionPage = () => {
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     // Clean eventListener
-    document.removeEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
   useEffect(() => {
     setTimeout(() => {
