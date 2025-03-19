@@ -30,25 +30,25 @@ const NavBar = () => {
         {/* Navigation */}
         <div className="hidden md:flex space-x-6">
           <Link
-            to="/collections/all"
+            to="/collections/all?gender=Man"
             className="text-gray-700 hover:text-black text-sm font-medium uppercase"
           >
             men
           </Link>
           <Link
-            to="#"
+            to="/collections/all?gender=Woman"
             className="text-gray-700 hover:text-black text-sm font-medium uppercase"
           >
             women
           </Link>
           <Link
-            to="#"
+            to="/collections/all?category=Top+Wear"
             className="text-gray-700 hover:text-black text-sm font-medium uppercase"
           >
             top wear
           </Link>
           <Link
-            to="#"
+            to="/collections/all?category=Bottom+Wear"
             className="text-gray-700 hover:text-black text-sm font-medium uppercase"
           >
             bottom wear
