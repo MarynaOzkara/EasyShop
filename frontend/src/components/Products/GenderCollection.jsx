@@ -19,7 +19,7 @@ const GenderCollection = () => {
               Women's Collection
             </h2>
             <Link
-              to="/collections/all?gender=Women"
+              to="/collections/all?gender=Woman"
               className="text-gray-900 underline"
             >
               Shop Now
@@ -38,7 +38,7 @@ const GenderCollection = () => {
               Men's Collection
             </h2>
             <Link
-              to="/collections/all?gender=Men"
+              to="/collections/all?gender=Man"
               className="text-gray-900 underline"
             >
               Shop Now

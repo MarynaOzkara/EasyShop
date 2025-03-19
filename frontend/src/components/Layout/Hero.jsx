@@ -20,7 +20,7 @@ const Hero = () => {
             Explore our new collection outfits with fast worldwide shipping.
           </p>
           <Link
-            to="#"
+            to="/collections/all"
             className="bg-white text-gray-900 px-6 py-2 rounded-sm text-lg hover:bg-brand-red hover:text-white transition-all"
           >
             Shop Now
