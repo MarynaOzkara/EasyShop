@@ -2,8 +2,7 @@ import React from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 const initialOptions = {
-  clientId:
-    "AQxkqOE6QG5resJPLRnV2lZzFhq79t7cTDqC0pnaSYK9Fy1M4-GEWItFzuEhE6_WKa-Xoubv5aw0qqse",
+  clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
   currency: "EUR",
 };
 const PayPalButton = ({ amount, onSuccess, onError }) => {
