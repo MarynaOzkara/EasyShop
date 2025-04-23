@@ -3,6 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const userRouter = require("./routes/user");
+const productRouter = require("./routes/product");
 
 const app = express();
 app.use(express.json());
@@ -13,6 +14,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", userRouter);
+app.use("/api/products", productRouter);
 
 app.use((err, req, res, next) => {
   const { status = 500, message = "Server error" } = err;
