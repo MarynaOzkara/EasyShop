@@ -1,2 +1,4 @@
 const create = require("./create");
-module.exports = { create };
+const update = require("./update");
+const remove = require("./delete");
+module.exports = { create, update, remove };

@@ -1,15 +1,7 @@
 const { ctrWrapper } = require("../../decorators");
+const getCart = require("../../helpers/getCart");
 const { Cart } = require("../../models/cart");
 const Product = require("../../models/product");
-
-const getCart = async (userId, guestId) => {
-  if (userId) {
-    return await Cart.findOne({ user: userId });
-  } else if (guestId) {
-    return await Cart.findOne({ guestId });
-  }
-  return null;
-};
 
 const create = async (req, res) => {
   const { productId, quantity, color, size, guestId, userId } = req.body;
