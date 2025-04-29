@@ -40,8 +40,8 @@ const cartSchema = new Schema(
   },
   { timestamps: true, versionKey: false }
 );
-// cartItemSchema.post("save", handleMongooseError);
+
 cartSchema.post("save", handleMongooseError);
-// const CartItem = model("cartItem", cartItemSchema);
+
 const Cart = model("cart", cartSchema);
-module.exports = { Cart };
+module.exports = Cart;

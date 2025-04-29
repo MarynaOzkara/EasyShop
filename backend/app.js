@@ -5,6 +5,7 @@ require("dotenv").config();
 const userRouter = require("./routes/user");
 const productRouter = require("./routes/product");
 const cartRouter = require("./routes/cart");
+const checkoutRouter = require("./routes/checkout");
 
 const app = express();
 app.use(express.json());
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartRouter);
+app.use("/api/checkout", checkoutRouter);
 
 app.use((err, req, res, next) => {
   const { status = 500, message = "Server error" } = err;
