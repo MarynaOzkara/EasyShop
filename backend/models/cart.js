@@ -43,5 +43,5 @@ const cartSchema = new Schema(
 
 cartSchema.post("save", handleMongooseError);
 
-const Cart = model("cart", cartSchema);
+const Cart = model("Cart", cartSchema);
 module.exports = Cart;

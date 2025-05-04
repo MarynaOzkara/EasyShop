@@ -20,6 +20,10 @@ const update = async (req, res) => {
     } else {
       cart.products.splice(productIndex, 1);
     }
+    // const roundedPrice = rounded(
+    //   cart.products.reduce((acc, item) => acc + item.price * quantity, 0)
+    // );
+    // cart.totalPrice = roundedPrice;
     cart.totalPrice = cart.products.reduce(
       (acc, item) => acc + item.price * item.quantity,
       0

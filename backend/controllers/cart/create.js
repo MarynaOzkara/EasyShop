@@ -1,4 +1,5 @@
 const { ctrWrapper } = require("../../decorators");
+const { rounded } = require("../../helpers");
 const getCart = require("../../helpers/getCart");
 const { Cart } = require("../../models/cart");
 const Product = require("../../models/product");
@@ -30,6 +31,10 @@ const create = async (req, res) => {
         quantity,
       });
     }
+    // const roundedPrice = rounded(
+    //   cart.products.reduce((acc, item) => acc + item.price * quantity, 0)
+    // );
+    // cart.totalPrice = roundedPrice;
     cart.totalPrice = cart.products.reduce(
       (acc, item) => acc + item.price * quantity,
       0
@@ -51,6 +56,7 @@ const create = async (req, res) => {
           quantity,
         },
       ],
+      // totalPrice: rounded(product.price * quantity),
       totalPrice: product.price * quantity,
     });
     return res.status(201).json(newCart);

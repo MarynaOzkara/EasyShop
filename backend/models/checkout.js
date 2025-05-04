@@ -86,5 +86,5 @@ const checkoutSchema = new Schema(
   { timestamps: true, versionKey: false }
 );
 checkoutSchema.post("save", handleMongooseError);
-const Checkout = model("checkout", checkoutSchema);
+const Checkout = model("Checkout", checkoutSchema);
 module.exports = Checkout;

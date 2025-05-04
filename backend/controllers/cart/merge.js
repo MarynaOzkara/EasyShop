@@ -23,6 +23,10 @@ const merge = async (req, res) => {
           userCart.products.push(item);
         }
       });
+      // const roundedPrice = rounded(
+      //   userCart.products.reduce((acc, item) => acc + item.price * quantity, 0)
+      // );
+      // userCart.totalPrice = roundedPrice;
       userCart.totalPrice = userCart.products.reduce(
         (acc, item) => acc + item.price * item.quantity,
         0

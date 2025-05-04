@@ -109,6 +109,6 @@ const productSchema = new Schema(
   { timestamps: true, versionKey: false }
 );
 productSchema.post("save", handleMongooseError);
-const Product = model("product", productSchema);
+const Product = model("Product", productSchema);
 
 module.exports = Product;

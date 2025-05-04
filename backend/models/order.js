@@ -26,7 +26,6 @@ const orderItemSchema = new Schema(
     color: String,
     quantity: {
       type: Number,
-      required: true,
     },
   },
   { _id: false },
@@ -95,5 +94,5 @@ const orderSchema = new Schema(
   { timestamps: true, versionKey: false }
 );
 orderSchema.post("save", handleMongooseError);
-const Order = model("order", orderSchema);
+const Order = model("Order", orderSchema);
 module.exports = Order;
