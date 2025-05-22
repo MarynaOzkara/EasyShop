@@ -43,12 +43,13 @@ export const fetchProductDetails = createAsyncThunk(
     const response = await axios.get(
       `${import.meta.env.VITE_BACKEND_URL}/api/products/${productId}`
     );
+
     return response.data;
   }
 );
 export const fetchSimilarProducts = createAsyncThunk(
   "products/fetchSimilarPrducts",
-  async ({ productId }) => {
+  async (productId) => {
     const response = await axios.get(
       `${import.meta.env.VITE_BACKEND_URL}/api/products/similar/${productId}`
     );
@@ -120,7 +121,7 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProductsByFilters.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload;
+        state.products = action.payload.products;
       })
       .addCase(fetchProductsByFilters.rejected, (state, action) => {
         state.loading = false;
@@ -144,7 +145,7 @@ const productsSlice = createSlice({
       })
       .addCase(fetchSimilarProducts.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload;
+        state.similarProducts = action.payload;
       })
       .addCase(fetchSimilarProducts.rejected, (state, action) => {
         state.loading = false;

@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import ProductGrid from "./ProductGrid";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchProductDetails,
+  fetchSimilarProducts,
+} from "../../redux/slices/productsSlice";
+import { useParams } from "react-router-dom";
+import { sameProducts, selectProduct } from "../../redux/selectors";
 
 const selectedProduct = {
   name: "Stylish Jacket",
@@ -73,12 +80,34 @@ const similarProducts = [
   },
 ];
 
-const ProductDetails = () => {
+const ProductDetails = ({ productId }) => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const product = useSelector(selectProduct);
+  const similar = useSelector(sameProducts);
+
   const [mainImage, setMainImage] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const fetchProductId = productId || id;
+  console.log(productId);
+  console.log(id);
+  console.log(product);
+  useEffect(() => {
+    if (fetchProductId) {
+      dispatch(fetchProductDetails(fetchProductId));
+      dispatch(fetchSimilarProducts(fetchProductId));
+    }
+  }, [dispatch, fetchProductId]);
+
+  useEffect(() => {
+    if (product?.images?.length > 0) {
+      setMainImage(product.images[0].url);
+    }
+  }, [product]);
+
   const handleQuantityChange = (action) => {
     if (action === "plus") setQuantity((prev) => prev + 1);
     if (action === "minus" && quantity > 1) setQuantity((prev) => prev - 1);
@@ -92,26 +121,22 @@ const ProductDetails = () => {
       return;
     }
     setIsButtonDisabled(true);
-    setTimeout(() => {
-      toast.success("Product added to cart!", {
-        duration: 1000,
-        style: { color: "green", fontSize: 18 },
-      });
-      setIsButtonDisabled(false);
-    }, 500);
+    // setTimeout(() => {
+    //   toast.success("Product added to cart!", {
+    //     duration: 1000,
+    //     style: { color: "green", fontSize: 18 },
+    //   });
+    //   setIsButtonDisabled(false);
+    // }, 500);
   };
-  useEffect(() => {
-    if (selectedProduct?.images?.length > 0) {
-      setMainImage(selectedProduct.images[0].url);
-    }
-  }, [selectedProduct]);
+
   return (
     <div className="p-6">
       <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg">
         <div className="flex flex-col md:flex-row">
           {/* Left Thumbnails */}
           <div className="hidden md:flex flex-col space-y-4 mr-6">
-            {selectedProduct.images.map((img, index) => (
+            {selectedProduct?.images.map((img, index) => (
               <img
                 key={index}
                 src={img.url}
@@ -251,7 +276,7 @@ const ProductDetails = () => {
           <h2 className="text-2xl text-center font-medium mb-4">
             You May Also Like
           </h2>
-          <ProductGrid products={similarProducts} />
+          <ProductGrid products={similar} />
         </div>
       </div>
     </div>
