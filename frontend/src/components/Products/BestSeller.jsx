@@ -19,10 +19,9 @@ const BestSeller = () => {
     };
     fetchBestSeller();
   }, []);
-  console.log(bestSeller);
+  // console.log(bestSeller);
   return (
     <>
-      <h2 className="text-3xl text-center font-bold mb-4">Best Seller</h2>
       {bestSeller ? (
         <ProductDetails productId={bestSeller} />
       ) : (
