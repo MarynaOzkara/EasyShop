@@ -3,11 +3,25 @@ import { FaFilter } from "react-icons/fa";
 import FilterSidebar from "../components/Products/FilterSidebar";
 import SortOptions from "../components/Products/SortOptions";
 import ProductGrid from "../components/Products/ProductGrid";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { errorProducts, loadingProducts, products } from "../redux/selectors";
+import { fetchProductsByFilters } from "../redux/slices/productsSlice";
 
 const CollectionPage = () => {
-  const [products, setProducts] = useState([]);
+  const { collection } = useParams();
+  const [searchParams] = useSearchParams();
+  const dispatch = useDispatch();
+  const collectionProducts = useSelector(products);
+  const loadind = useSelector(loadingProducts);
+  const error = useSelector(errorProducts);
+  const queryParams = Object.fromEntries([...searchParams]);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarRef = useRef(null);
+
+  useEffect(() => {
+    dispatch(fetchProductsByFilters({ collection, ...queryParams }));
+  }, [collection, dispatch, searchParams]);
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -24,101 +38,7 @@ const CollectionPage = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  useEffect(() => {
-    setTimeout(() => {
-      const fetchProducts = [
-        {
-          _id: "1",
-          name: "Stylish Jacket",
-          price: 120,
-          images: [
-            {
-              url: "https://picsum.photos/500/500?random=1",
-              altText: "Stylish Jacket",
-            },
-          ],
-        },
-        {
-          _id: "2",
-          name: "Stylish Jacket",
-          price: 120,
-          images: [
-            {
-              url: "https://picsum.photos/500/500?random=2",
-              altText: "Stylish Jacket",
-            },
-          ],
-        },
-        {
-          _id: "3",
-          name: "Stylish Jacket",
-          price: 120,
-          images: [
-            {
-              url: "https://picsum.photos/500/500?random=3",
-              altText: "Stylish Jacket",
-            },
-          ],
-        },
-        {
-          _id: "4",
-          name: "Stylish Jacket",
-          price: 120,
-          images: [
-            {
-              url: "https://picsum.photos/500/500?random=4",
-              altText: "Stylish Jacket",
-            },
-          ],
-        },
-        {
-          _id: "5",
-          name: "Stylish Jacket",
-          price: 120,
-          images: [
-            {
-              url: "https://picsum.photos/500/500?random=5",
-              altText: "Stylish Jacket",
-            },
-          ],
-        },
-        {
-          _id: "6",
-          name: "Stylish Jacket",
-          price: 120,
-          images: [
-            {
-              url: "https://picsum.photos/500/500?random=6",
-              altText: "Stylish Jacket",
-            },
-          ],
-        },
-        {
-          _id: "7",
-          name: "Stylish Jacket",
-          price: 120,
-          images: [
-            {
-              url: "https://picsum.photos/500/500?random=7",
-              altText: "Stylish Jacket",
-            },
-          ],
-        },
-        {
-          _id: "8",
-          name: "Stylish Jacket",
-          price: 120,
-          images: [
-            {
-              url: "https://picsum.photos/500/500?random=8",
-              altText: "Stylish Jacket",
-            },
-          ],
-        },
-      ];
-      setProducts(fetchProducts);
-    }, 1000);
-  }, []);
+
   return (
     <div className="flex flex-col lg:flex-row">
       {/* Mobile Filters button */}
@@ -142,7 +62,11 @@ const CollectionPage = () => {
         {/* Sort Options */}
         <SortOptions />
         {/* Products Grid */}
-        <ProductGrid products={products} />
+        <ProductGrid
+          products={collectionProducts}
+          loading={loadind}
+          error={error}
+        />
       </div>
     </div>
   );

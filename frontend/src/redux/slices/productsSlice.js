@@ -34,6 +34,7 @@ export const fetchProductsByFilters = createAsyncThunk(
     const response = await axios.get(
       `${import.meta.env.VITE_BACKEND_URL}/api/products?${query.toString()}`
     );
+
     return response.data;
   }
 );

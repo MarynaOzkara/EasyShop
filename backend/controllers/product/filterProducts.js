@@ -21,7 +21,7 @@ const filterProducts = async (req, res) => {
     query.collections === collection;
   }
   if (category && category.toLocaleLowerCase() !== "all") {
-    query.category === category;
+    query.category = { $regex: category, $options: "i" };
   }
   if (material) {
     query.material = { $in: material.split(",") };

@@ -1,7 +1,8 @@
 const { ctrWrapper } = require("../../decorators");
 const { rounded } = require("../../helpers");
 const getCart = require("../../helpers/getCart");
-const { Cart } = require("../../models/cart");
+const Cart = require("../../models/cart");
+
 const Product = require("../../models/product");
 
 const create = async (req, res) => {
@@ -56,10 +57,10 @@ const create = async (req, res) => {
           quantity,
         },
       ],
-      // totalPrice: rounded(product.price * quantity),
       totalPrice: product.price * quantity,
     });
-    return res.status(201).json(newCart);
+
+    res.status(201).json(newCart);
   }
 };
 module.exports = ctrWrapper(create);

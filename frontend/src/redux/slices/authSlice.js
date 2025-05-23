@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { nanoid } from "nanoid";
 
 const userFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
   : null;
 
-const initialGuestId =
-  localStorage.getItem("guestId") || `guest_${new Date().getTime}`;
+const initialGuestId = localStorage.getItem("guestId") || "guest_" + nanoid();
 localStorage.setItem("guestId", initialGuestId);
 
 const initialState = {
@@ -56,13 +56,13 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
-      state.guestId = `guest_${new Date().getTime}`;
+      state.guestId = "guest_" + nanoid();
       localStorage.removeItem("userInfo");
       localStorage.removeItem("userToken");
       localStorage.setItem("guestId", state.guestId);
     },
     generateNewGuestId: (state) => {
-      state.guestId = `guest_${new Date().getTime}`;
+      state.guestId = "guest_" + nanoid();
       localStorage.setItem("guestId", state.guestId);
     },
   },

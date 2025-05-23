@@ -48,7 +48,7 @@ const FilterSidebar = () => {
     "Fasionista",
     "Chik Style",
   ];
-  const genders = ["Man", "Woman"];
+  const genders = ["Men", "Women"];
   useEffect(() => {
     const params = Object.fromEntries([...searchParams]);
     setFilters({
