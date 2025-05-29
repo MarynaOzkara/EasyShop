@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-const API_URL = `${import.meta.env.VITE_BACKEND_URL}`;
+import { backend } from "../instance";
+
 const USER_TOKEN = `Bearer ${localStorage.getItem("userToken")}`;
 
 export const fetchAdminOrders = createAsyncThunk(
   "adminOrders/fetchOrders",
   async () => {
-    const response = await axios.get(`${API_URL}/api/admin/orders`, {
+    const response = await backend.get(`/api/admin/orders`, {
       headers: { Authorization: USER_TOKEN },
     });
     return response.data;
@@ -15,8 +15,8 @@ export const fetchAdminOrders = createAsyncThunk(
 export const updateOrderStatus = createAsyncThunk(
   "adminOrders/updateOrderStatus",
   async ({ id, status }) => {
-    const response = await axios.put(
-      `${API_URL}/api/admin/orders/${id}`,
+    const response = await backend.put(
+      `/api/admin/orders/${id}`,
       { status },
       {
         headers: { Authorization: USER_TOKEN },
@@ -28,7 +28,7 @@ export const updateOrderStatus = createAsyncThunk(
 export const deleteOrder = createAsyncThunk(
   "adminOrders/deleteOrder",
   async (id) => {
-    await axios.delete(`${API_URL}/api/admin/orders/${id}`, {
+    await backend.delete(`/api/admin/orders/${id}`, {
       headers: { Authorization: USER_TOKEN },
     });
     return id;

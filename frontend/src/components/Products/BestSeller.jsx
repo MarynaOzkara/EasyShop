@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ProductDetails from "./ProductDetails";
-
-import axios from "axios";
 import { backend } from "../../redux/instance";
 
 const BestSeller = () => {

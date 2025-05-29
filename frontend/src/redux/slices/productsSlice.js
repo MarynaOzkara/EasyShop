@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { backend } from "../instance";
-// import axios from "axios";
-// axios.defaults.baseURL = "http://localhost:9000";
+
 
 export const fetchProductsByFilters = createAsyncThunk(
   "producs/fetchByFilters",

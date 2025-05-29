@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchProductDetails } from "../../redux/slices/productsSlice";
-import axios from "axios";
 import { updateProduct } from "../../redux/slices/adminProductSlice";
+import { backend } from "../../redux/instance";
 
 const EditProductPage = () => {
   const dispatch = useDispatch();
@@ -49,16 +49,12 @@ const EditProductPage = () => {
     formData.append("image", file);
     try {
       setUploading(true);
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/upload`,
-        formData,
-        {
-          headers: {
-            "Content-type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-          },
-        }
-      );
+      const { data } = await backend.post(`/api/upload`, formData, {
+        headers: {
+          "Content-type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+        },
+      });
       setProductData((prevData) => ({
         ...prevData,
         images: [...prevData.images, { url: data.imageUrl, altText: "" }],
