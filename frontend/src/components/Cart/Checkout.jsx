@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { createCheckout } from "../../redux/slices/checkoutSlice";
 import { backend } from "../../redux/instance";
+import Loader from "../Layout/Loader";
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ const Checkout = () => {
       console.error(error);
     }
   };
-  if (loading) return <p>Loading cart...</p>;
+  if (loading) return <Loader />;
   if (error) return <p>Error: {error}</p>;
   if (!cart || !cart.products || cart.products.length === 0) {
     return <p>Your cart is empty.</p>;

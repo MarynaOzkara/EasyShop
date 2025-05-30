@@ -7,6 +7,7 @@ import {
   fetchUsers,
   updateUser,
 } from "../../redux/slices/adminSlice";
+import Loader from "../Layout/Loader";
 
 const UserManagement = () => {
   const dispatch = useDispatch();
@@ -56,7 +57,7 @@ const UserManagement = () => {
   return (
     <div className="max-w-7xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-6">User Management</h2>
-      {loading && <p>Loading...</p>}
+      {loading && <Loader />}
       {error && <p>Error: {error}</p>}
       {/* Add new User Form */}
       <div className="p-6 rounded-lg mb-6">

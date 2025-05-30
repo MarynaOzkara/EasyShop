@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchAdminProducts } from "../redux/slices/adminProductSlice";
 import { fetchAdminOrders } from "../redux/slices/adminOrdersSlice";
+import Loader from "../components/Layout/Loader";
 
 const AdminHomePage = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const AdminHomePage = () => {
     <div className="max-w-7xl mx-auto p-6">
       <h1 className="text-3xl mb-6 font-bold">Admin Dashboard</h1>
       {productsLoading || ordersLoading ? (
-        <p>Loading...</p>
+        <Loader />
       ) : productsError ? (
         <p className="text-red-500">Error: {productsError}</p>
       ) : ordersError ? (

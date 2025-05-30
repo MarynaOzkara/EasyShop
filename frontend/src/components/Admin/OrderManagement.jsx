@@ -5,6 +5,7 @@ import {
   fetchAdminOrders,
   updateOrderStatus,
 } from "../../redux/slices/adminOrdersSlice";
+import Loader from "../Layout/Loader";
 
 const OrderManagement = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ const OrderManagement = () => {
     // console.log({ id: orderId, status });
     dispatch(updateOrderStatus({ id: orderId, status }));
   };
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader />;
   if (error) return <p>Error: {error}</p>;
   return (
     <div className="max-w-7xl mx-auto p-6">

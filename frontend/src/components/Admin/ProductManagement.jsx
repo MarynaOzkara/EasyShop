@@ -5,6 +5,7 @@ import {
   deleteProduct,
   fetchAdminProducts,
 } from "../../redux/slices/adminProductSlice";
+import Loader from "../Layout/Loader";
 
 const ProductManagement = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const ProductManagement = () => {
       dispatch(deleteProduct(id));
     }
   };
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader />;
   if (error) return <p>Error: {error}</p>;
   return (
     <div className="max-w-7xl mx-auto p-6">

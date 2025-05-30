@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { fetchProductDetails } from "../../redux/slices/productsSlice";
 import { updateProduct } from "../../redux/slices/adminProductSlice";
 import { backend } from "../../redux/instance";
+import Loader from "../Layout/Loader";
 
 const EditProductPage = () => {
   const dispatch = useDispatch();
@@ -70,7 +71,7 @@ const EditProductPage = () => {
     dispatch(updateProduct({ id, productData }));
     navigate("/admin/products");
   };
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader />;
   if (error) return <p>Error: {error}</p>;
   return (
     <div className="max-w-5xl mx-auto p-6 shadow-md rounded-md">

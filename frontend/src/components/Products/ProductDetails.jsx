@@ -16,6 +16,7 @@ import {
   userId,
 } from "../../redux/selectors";
 import { addToCart } from "../../redux/slices/cartSlice";
+import Loader from "../Layout/Loader";
 
 const ProductDetails = ({ productId }) => {
   const { id } = useParams();
@@ -82,7 +83,7 @@ const ProductDetails = ({ productId }) => {
       });
   };
   if (loading) {
-    return <p>Loading....</p>;
+    return <Loader />;
   }
   if (error) {
     return <p>Error: {error}</p>;
